@@ -1,0 +1,42 @@
+#include <iostream>
+#include <fstream>
+#include <thread>
+using namespace std;
+
+void compressFile() {
+    ifstream in("input.txt");
+    ofstream out("compressed.txt");
+
+    char ch;
+    while (in.get(ch)) {
+        out.put(ch - 1);   // Simple compression logic
+    }
+
+    in.close();
+    out.close();
+    cout << "Compression completed.\n";
+}
+
+void decompressFile() {
+    ifstream in("compressed.txt");
+    ofstream out("decompressed.txt");
+
+    char ch;
+    while (in.get(ch)) {
+        out.put(ch + 1);   // Reverse logic
+    }
+
+    in.close();
+    out.close();
+    cout << "Decompression completed.\n";
+}
+
+int main() {
+    thread t1(compressFile);
+    thread t2(decompressFile);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
